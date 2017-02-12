@@ -17,8 +17,8 @@ DayDuration = 8;
 8 -> 21 as 22
 */ 
 
-
-Teacher = { "ADICINEIA APARECIDA", 
+ Teacher = { 
+			"ADICINEIA APARECIDA", 
 			"ADMILSON RIBAMAR" , 
 		    "ALBERTO COSTA", 
 			"ANDRÉ BRITO" , 
@@ -51,6 +51,7 @@ Teacher = { "ADICINEIA APARECIDA",
 }; 
 			
 Discipline = {
+ //Ciencia da Computacao
 	"Arquitetura de Computadores I",
 	"Banco de Dados",
 	"Compiladores",
@@ -71,6 +72,7 @@ Discipline = {
 	"Informática, Ética e sociedade",
 	"Informática Educativa",
 	"Interface Humano - Computador",
+	"Introdução a Ciência da computação",
 	"Métodos e Técnicas de Pesquisas",
 	"Paradigmas de Programação",
 	"Progamação Imperativa",
@@ -83,6 +85,10 @@ Discipline = {
 	"Progamação para Web",
 	"Sistemas Operacionais",
 	"Sistemas Distribuídos",
+	
+//Engenharia da Comutacao
+	"Algoritmos",
+	"MICROCOMPUTADORES"	
 };
 
 
@@ -90,7 +96,7 @@ Discipline = {
 TeacherSkills = {
 	<"ADICINEIA APARECIDA", {}  >,
 	<"ADMILSON RIBAMAR", {"Arquitetura de Computadores I", "Progamação Imperativa"} >,
-	<"ALBERTO COSTA", {"Paradigmas de Progamação" ,"Estrutura de Dados I"} >,
+	<"ALBERTO COSTA", {"Paradigmas de Progamação" ,"Estrutura de Dados I" , "Introdução a Ciência da computação"} >,
 	<"ANDRÉ BRITO", {"Banco de Dados" ,"Progamação Imperativa"} >,
 	<"ANTONIO MONTEIRO", {"Progamação para Web" ,"Progamação Imperativa"} >,
 	<"BEATRIZ TRINCHAO", {"Compiladores" ,"Progamação Orientada a Objetos" , "Processamento de Imagens e Computação Gráfica"} >,
@@ -101,12 +107,12 @@ TeacherSkills = {
 	<"DEBORA MARIA", {"Desenvolvimento de Software III"} >,
 	<"EDILAYNE SALGUEIRO", {"Redes de Computadores II"} >,
 	<"EDWARD DAVID", {"Laboratório de Circuitos Digitais II" ,"Circuitos Digitais II"} >,	
-	<"GILTON JOSÉ", {"Progamação Imperativa"} >,
+	<"GILTON JOSÉ", {"Progamação Imperativa" , "Introdução a Ciência da computação"} >,
 	<"GIOVANNY FERNANDO", {"Compiladores"} >,	
 	<"HENDRIK TEIXEIRA", {"Inteligência Artificial" , "Fundamentos da Computação"} >,
 	<"HENRIQUE SCHNEIDER", {"Interface Humano - Computador", "Informática Educativa"} >,
-	<"JANIO COUTINHO", {"Banco de Dados" , "Progamação Orientada a Objetos"} >,	
-	<"JOSE HENRIQUE", {"Desenvolvimento de Software I" , "Desenvolvimento de Software III"} >,	
+	<"JANIO COUTINHO", {"Banco de Dados" , "Progamação Orientada a Objetos" , "Introdução a Ciência da computação"} >,	
+	<"JOSE HENRIQUE", {"Desenvolvimento de Software I" , "Desenvolvimento de Software III" , "Introdução a Ciência da computação"} >,	
 	<"KALIL ARAUJO", {"Compiladores" ,"Progamação Imperativa"} >,	
 	<"KENIA KODEL", {"Progamação Imperativa"} >,
 	<"LEILA MACIEL", {"Grafos" ,"Projeto e Analise de Algoritmos"} >,	
@@ -128,17 +134,16 @@ TeacherChoices = {
    <"HENRIQUE SCHNEIDER", "Informática Educativa", 6 , 1>,
 };
                        
-// rooms outside of this list support 
-// all disciplines but those specified here.
-DedicatedRoomSet = { <"Lab Redes", "Redes de Computadores I">,
-                     <"Lab Redes", "Redes de Computadores II">,
-                     <"Lab Redes", "Sistemas Distribuídos">,
-                     <"Lab Hardware", "Laboratório de Circuitos Digitais II">,
-                     <"Lab Hardware", "Laboratório de Circuitos Digitais I">,
-                     <"Lab Geral", "Inteligencia Artificial">,
+
+//salas e reservas para disciplinas
+DedicatedRoomSet = { <"Laboratório de Graduação 04", "Redes de Computadores II">,
+                     <"Laboratório de Graduação 05", "Sistemas Distribuídos">,
+                     <"Lab Ensino Hardware", "Laboratório de Circuitos Digitais II">,
+                     <"Lab Ensino Hardware", "Laboratório de Circuitos Digitais I">,
+                     <"Laboratório de Graduação 02", "Inteligencia Artificial">,
                      <"Lab Geral", "Progamação Imperativa">,
                      <"Lab Geral", "Progamação Orientada a Objetos">,
-                     <"Lab Geral", "Progamação para Web">,
+                     <"Laboratório de Graduação 02", "Progamação para Web">,
 };
                    
 //salas e suas capacidades de alunos
@@ -146,66 +151,89 @@ Room = {<"DID 6 - 100", 70>,
 		<"DID 5 - 012", 50>,
 		<"DID 5 - 06", 50 >,  
 		<"DID 5 - 111", 70>,
+		<"DID 5 - 101", 70>,
 		<"DID 4 - 101", 70>, 
 		<"DID 4 - 102", 70>, 
 		<"DID 4 - 103", 50>, 
-		<"DID 4 - 06", 50>, 
-		<"DID 4 - 07", 50>,
+		<"DID 4 - 06", 30>, 
 		<"DID 4 - 08", 50>, 
-		<"DID 4 - 12", 50>,
+		<"DID 4 - 12", 30>,
 		<"DID 3 - 101", 50>, 
+		<"DID 3 - 102", 50>, 
 		<"DID 3 - 113", 50> ,
-		<"DID 2 - 02", 50>, 
-		<"DID 2 - 07", 50>,
-		<"DID 1 - 09", 50>,
+		<"DID 2 - 02", 30>, 
+		<"DID 2 - 07", 30>,
+		<"DID 1 - 09", 30>,
 		<"DID 1 - 10", 50>,			
-		<"Lab Básico", 30>,
-		<"Lab Geral" , 50 >,
-		<"Lab Avançado", 30>, 
-		<"Lab Redes" , 50>, 
-		<"Lab Hardware", 30> ,
+		<"Laboratório de Graduação 02", 30>,
+		<"Laboratório de Graduação 03", 15>,
+		<"Laboratório de Graduação 04", 40>,
+		<"Laboratório de Graduação 05", 24>,
+		<"Laboratório de Graduação 06", 06>,
+		<"Lab Ensino Hardware", 21> ,
+		<"Laboratório de Pesquisa em Hardware 02", 16> ,
+		
+		//dcomp antigo
+		
 };
-
 
  //<semestre curricular de 1 a 7 , disciplina, quantidade de alunos>
  //Turmas ofertadas. Materias de mesmo semestre nao devem chocar horario
  ClassesBySemester = {
-   <1, "Progamação Imperativa", 70>,
-   <1, "Fundamentos da Computação", 50>,
-   <1, "Métodos e Técnicas de Pesquisas", 50>,
+   //<semestre, nomeTurma, disciplina, qtdEstudantes>
+   <1, "T01","Progamação Imperativa", 70>,
+   <1, "T02","Progamação Imperativa", 70>,
+   <1, "T03","Progamação Imperativa", 70>,
+   <1, "T01","Fundamentos da Computação", 50>,
+   <1, "T01","Métodos e Técnicas de Pesquisas", 50>,
    
-   <2,  "Lógica para Computação", 50>,
-   <2, 	"Progamação Orientada a Objetos", 70>,
-   <2,  "Estrutura de Dados I", 50>,
-   <2, 	"Circuitos Digitais I", 50>,
-   <2, 	"Laboratório de Circuitos Digitais I", 50>,
+   <2, "T01", "Lógica para Computação", 50>,
+   <2, "T01", "Progamação Orientada a Objetos", 70>,
+   <2, "T02", "Progamação Orientada a Objetos", 70>,
+   <2, "T01", "Estrutura de Dados I", 50>,
+   <2, "T02", "Estrutura de Dados I", 50>,
+   <2, "T01", "Circuitos Digitais I", 50>,
+   <2, "T01", "Laboratório de Circuitos Digitais I", 25>,
+   <2, "T02", "Laboratório de Circuitos Digitais I", 25>,
    
-   <3, 	"Progamação Declarativa",  50>,
-   <3, 	"Arquitetura de Computadores I", 50>,
-   <3, 	"Estrutura de Dados II", 50>,
-   <3, 	"Informática, Ética e sociedade", 50>,
-   <3, 	"Progamação para Web", 50>,
+   <3, "T01", "Progamação Declarativa",  50>,
+   <3, "T01", "Arquitetura de Computadores I", 50>,
+   <3, "T02", "Arquitetura de Computadores I", 50>,
+   <3, "T01", "Estrutura de Dados II", 50>,
+   <3  "T01", "Informática, Ética e sociedade", 50>,
+   <3, "T01", "Progamação para Web", 50>,
    
-   <4,  "Laboratório de Circuitos Digitais II", 50>,
-   <4, 	"Grafos", 50>,
-   <4, 	"Informática Educativa", 50>,
-   <4, 	"Paradigmas de Programação", 50>,
-   <4, 	"Sistemas Operacionais", 50>,   
-   <4, 	"Circuitos Digitais II", 50>,
-   <4, 	"Projeto e Analise de Algoritmos", 50>,
+   <4,  "T01", "Laboratório de Circuitos Digitais II", 30>,
+   <4, 	"T01", "Grafos", 50>,
+   <4, 	"T01", "Informática Educativa", 50>,
+   <4, 	"T01", "Paradigmas de Programação", 50>,
+   <4,  "T01", "Sistemas Operacionais", 50>,
+   <4,  "T02", "Sistemas Operacionais", 50>,   
+   <4, 	"T01", "Circuitos Digitais II", 30>,
+   <4, 	"T01", "Projeto e Analise de Algoritmos", 50>,
    
-   <5, 	"Desenvolvimento de Software I", 50>,
-   <5, 	"Linguagens formais e computabilidade", 50>,
-   <5,  "Inteligência Artificial", 50>,
-   <5, 	"Redes de Computadores I", 50>,
-   <5, 	"Banco de Dados", 50>,
+   <5, 	"T01", "Desenvolvimento de Software I", 50>,
+   <5, 	"T02", "Desenvolvimento de Software I", 50>,
+   <5, 	"T01", "Linguagens formais e computabilidade", 50>,
+   <5,  "T01", "Inteligência Artificial", 50>,
+   <5,  "T02", "Inteligência Artificial", 50>,
+   <5, 	"T01", "Redes de Computadores I", 50>,
+   <5, 	"T02", "Redes de Computadores I", 50>,
+   <5, 	"T01", "Banco de Dados", 50>,
 
-   <6, 	"Compiladores" , 50>,
-   <6, 	"Desenvolvimento de Software II", 50>,
-   <6, 	"Interface Humano - Computador", 50>,
-   <6, 	"Processamento de Imagens e Computação Gráfica", 50>,
-   <6, 	"Redes de Computadores II", 50>,
+   <6, 	"T01", "Compiladores" , 50>,
+   <6, 	"T01", "Desenvolvimento de Software II", 50>,
+   <6, 	"T01", "Interface Humano - Computador", 50>,
+   <6, 	"T02", "Interface Humano - Computador", 50>,
+   <6, 	"T01", "Processamento de Imagens e Computação Gráfica", 50>,
+   <6, 	"T01", "Redes de Computadores II", 50>,
 	
-   <7, 	"Desenvolvimento de Software III", 50>,
-   <7,  "Sistemas Distribuídos", 50>,  
+   <7, 	"T01", "Desenvolvimento de Software III", 50>,
+   <7,  "T01", "Sistemas Distribuídos", 50>, 
+    
+   //turmas para outros departamentos
+   <0, "T01","Introdução a Ciência da computação", 70>,
+   <0, "T02","Introdução a Ciência da computação", 70>,
+   <0, "T03","Introdução a Ciência da computação", 70>,
+   
  };
