@@ -53,10 +53,11 @@ range disciplineIdx = 1..countDisciplines;
 int countTeachers = card(Teacher);
 range teacherIdx = 1..countTeachers;
 {Pair1} TeacherSkills = ...;
-{Preferencia} TeacherChoices = ...;
+{Preferencia} TeacherPreferences = ...;
 {Pair} DedicatedRoomSet = ...;
-{Oferta} ClassesBySemester = ...;
-int countClasses = card(ClassesBySemester); //contador de classes
+{Oferta} CourseOfferings = ...;
+
+int countClasses = card(CourseOfferings); //contador de turmas
 range classIdx = 1..countClasses;
 
 
