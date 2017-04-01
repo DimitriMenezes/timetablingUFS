@@ -1,0 +1,28 @@
+
+
+MorningClass = {"EC1","EC2","EC3","EC4","EC5","EC6", "ENG.AMB", "ENG.ALI", "ENG.QUI","ENG.ELE","ENG.PET","ENG.ELET","QUI.IND","FIS.MED"};
+AfternoonClass = {"CC1","CC2","CC3","CC4","CC5","CC6","CC7", "ENG.CIV", "ENG.PRO","MAT","MAT.APL","FIS"};
+NoonClass = {"SI1","SI2","SI3","SI4","SI5","SI6","SI7","SI8","SI9"};
+
+
+//Ofertas das disciplinas
+RequirementSet = {
+ //<"class", "discipline", nHours, nRepetions, capacity>
+     
+  //<"MAT.APL", "COMP0212 - ESTRUTURA DE DADOS I", 1,2,50>,
+  //<"QUI.IND", "COMP0100 - INTRODUCAO A CIENCIA DA COMPUTACAO",1,2,55>,
+  //<"ENG.CIV", "COMP0100 - INTRODUCAO A CIENCIA DA COMPUTACAO",1,2,55>,
+  //<"FIS", "COMP0100 - INTRODUCAO A CIENCIA DA COMPUTACAO",1,2,55>,
+  
+  
+  <"CC4", "COMP0221 - CIRCUITOS DIGITAIS II", 1 , 2,30>,
+  <"CC4", "COMP0234 - PROJETO E ANALISE DE ALGORITMOS", 1 ,2, 50>,	
+  <"CC4", "COMP0235 - GRAFOS", 1 , 2, 50>,
+  <"CC4", "COMP0265 - INFORMÁTICA EDUCATIVA", 1 , 2, 50>,
+  <"CC4", "COMP0201 - PARADIGMAS DE PROGRAMAÇÃO", 1, 1,50>,
+  <"CC4", "COMP0222 - LABORATÓRIO DE CIRCUITOS DIGITAIS II", 1 , 1, 25>,
+   
+  <"CC4", "COMP0306 - SISTEMAS OPERACIONAIS", 1 , 3, 30>,
+  <"EC6", "COMP0306 - SISTEMAS OPERACIONAIS", 1, 3, 50>, 
+
+};
