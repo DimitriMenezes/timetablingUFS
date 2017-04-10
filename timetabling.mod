@@ -210,10 +210,14 @@ dvar int Start[InstanceSet] in Time;               			// Variavel de alocacao so
 dvar int room[InstanceSet] in RoomId;              			// Variavel de alocacao no espaço
 dvar int teacher[InstanceSet] in TeacherId;        			// Variavel de alocacao de recurso
 dvar int classTeacher[Curriculum,Discipline] in TeacherId;  // teacher working once per time point
-dvar boolean alocado[Curriculum,Time]; 						// variavel de alocacao de atividade
+//dvar boolean alocado[Curriculum,Time]; 						// variavel de alocacao de atividade
 
 // maximizar a preferencia dos professores em lecionar em determinado horario
-dexpr int objetivo = sum(i in Curriculum, j in Time, k in Teacher) weight[i][j][k]*alocado[i][j];
+//dexpr int objetivo = sum(i in Curriculum, j in Time, k in Teacher) weight[i][j][k]*alocado[i][j];
+
+dexpr int objetivo = sum(i in Curriculum, j in Time, l in InstanceSet: i == l.Curriculum, 
+m in TeacherPreference : i == m.Curriculum && l.discipline == m.discipline) 
+	weight[i][j][m.teacher] * ( Start[l] == j );
 
 // search setup
 //
@@ -241,7 +245,7 @@ maximize objetivo;
 
 subject to {
   
-  //--------------------------------
+  //-------------------------------- ||
   //PREFERENCIA DO PROFESSOR       	
     
    //garantir que a preferencia do professor pelo horario seja respeitada
@@ -249,9 +253,7 @@ subject to {
 	forall(r in InstanceSet, x in TeacherPreference)
 	  if(r.Curriculum == x.Curriculum && r.discipline == x.discipline)
 	  	Start[r] in teacherHours[x.teacher][x.Curriculum][x.discipline];
-   
-   
-
+	  
    
   //----------------------------------------------  
   //RESTRICAO DE DISPONIBILIDADE DO PROFESSOR
@@ -321,19 +323,12 @@ subject to {
        //) < 2;
   }  
     
-   //RESTRICOES DE AULA   
-  
-  //garantir que a aula acaba após iniciar
-  /*forall(r in InstanceSet) {
-   restricao1: End[r] == 1 + Start[r];       	
-  } */   
-  
+   //RESTRICOES DE AULA    
     //garantir que os cursos da manha iniciem e acabem pela manha
   forall(d in MorningCurriculum, i in InstanceSet
          : i.Curriculum == d) 
     (Start[i] % DayDuration) >= 0 && (Start[i] % DayDuration) < HalfDayDuration;
-     
-  
+       
   //garantir que os cursos da tarde iniciem e acabem pela tarde
   forall(d in AfternoonCurriculum, i in InstanceSet
          : i.Curriculum == d)    
@@ -344,7 +339,6 @@ subject to {
          : i.Curriculum == d) 
     (Start[i] % DayDuration) >= 5 && (Start[i] % DayDuration) < DayDuration; 
 	
-
 };
 
 //
@@ -435,9 +429,7 @@ execute POST_PROCESS {
 		        } 
 		        if(activity != 0)       
 			        writeln(x.room, "\t", 
-			                x.discipline, "\t", 
-			                //x.id, "/", 
-			                //x.repetition, "\t", 
+			                x.discipline, "\t",			           
 			                x.teacher);			             
 	      	}
 		    if(activity == 0){
