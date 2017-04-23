@@ -104,26 +104,6 @@ for(var t in TeacherPreference){
 		Discipline.add(t.discipline);
 }
 
-//pre processamento da matriz PossibleRoom
-/*for(var i in RequirementSet){
-	for(var j in Room){	
-		for(var k in DedicatedRoomSet){
-		    //Restricao de Adequacao de Sala	
-			if(i.discipline == k.discipline && j == k.room){
-				PossibleRoom[i.discipline][j] = 1;					
-			}
-			else{
-				//se nao for sala reservada, checar a capacidade
-				if(j.capacity >= i.capacity){
-					PossibleRoom[i.discipline][j] = 1;						
-				}						
-				else{
-					PossibleRoom[i.discipline][j] = 0;			
-				}
-  			}								
-		}			
-	}
-}*/
 
 //pre processamento da matriz PossibleTeacherClass
 for(var i in Teacher){
@@ -210,16 +190,15 @@ dvar int Start[InstanceSet] in Time;               			// Variavel de alocacao so
 dvar int room[InstanceSet] in RoomId;              			// Variavel de alocacao no espaço
 dvar int teacher[InstanceSet] in TeacherId;        			// Variavel de alocacao de recurso
 dvar int classTeacher[Curriculum,Discipline] in TeacherId;  // teacher working once per time point
-//dvar boolean alocado[Curriculum,Time]; 						// variavel de alocacao de atividade
+
+//FUNCAO OBJETIVO
 
 // maximizar a preferencia dos professores em lecionar em determinado horario
-//dexpr int objetivo = sum(i in Curriculum, j in Time, k in Teacher) weight[i][j][k]*alocado[i][j];
-
 dexpr int objetivo = sum(i in Curriculum, j in Time, l in InstanceSet: i == l.Curriculum, 
 m in TeacherPreference : i == m.Curriculum && l.discipline == m.discipline) 
 	weight[i][j][m.teacher] * ( Start[l] == j );
 
-// search setup
+// SETUP DE BUSCA
 //
 execute {
    writeln("MaxTime = ", MaxTime);
@@ -237,7 +216,7 @@ execute {
    var p = cp.param;
    p.logPeriod = 10000;
    p.searchType = "DepthFirst";
-   p.timeLimit = 30;
+   p.timeLimit = 60;
 }
 
 
@@ -259,15 +238,13 @@ subject to {
   //RESTRICAO DE DISPONIBILIDADE DO PROFESSOR
   
   //Garantir que o professor tenha uma ou nenhuma aula em determinado horário
-  /*forall(r in InstanceSet, x in Teacher) {
+  forall(r in InstanceSet, x in Teacher) {
     if(<r.discipline, r.Curriculum> in PossibleTeacherClass[x])
       (sum(o in InstanceSet
                                 : <r.discipline, r.Curriculum> in PossibleTeacherClass[x] && r.id != o.id)
-        (Start[o] != Start[r]) == 0) && (teacher[r] == ord(Teacher,x)) ;
-        //*(Start[o] < End[r])
-        //*(teacher[o] == ord(Teacher,x))) < 2 ;
-  }*/
-  
+        (Start[o] != Start[r]) == 0) * (teacher[r] == ord(Teacher,x)) < 2 ;
+
+  }
  
    
   //garantir que o professor pode lecionar a disciplina daquele curriculo
@@ -279,7 +256,7 @@ subject to {
          : r.Curriculum == c && r.discipline == d) 
     teacher[r] == classTeacher[c, d];
         
-	//Garantir que a carga horaria maxima do professor durante a semana seja respeitada
+	//Garantir que a carga horaria minima do professor durante a semana seja respeitada
 	forall(teacher in Teacher){
 	  ch[teacher] < 18;	
 	}  
@@ -292,11 +269,10 @@ subject to {
   //garantir que nao tenha duas ou mais aulas em uma mesma sala no mesmo horario
   forall(r in InstanceSet, x in Room) {
     if(PossibleRoom[r.discipline,x] == 1)
-      (sum(o in InstanceSet : 1 == PossibleRoom[o.discipline,x] && r.id != o.id)
-      	//Start[o] == Start[r]) == 0;
-        (Start[o] == Start[r])
-        //*(Start[o] < End[r])
-        *(room[o] == ord(Room,x))) < 2;            
+      (sum(o in InstanceSet : 1 == PossibleRoom[o.discipline,x] && r.id != o.id)      	
+        (Start[o] == Start[r]) *(room[o] == ord(Room,x))) < 2;        
+   
+                
   }
   
   //RESTRICAO DE CAPACIDADE DE SALAS
@@ -309,10 +285,9 @@ subject to {
  forall(i,j in InstanceSet)
     if(i.Curriculum == j.Curriculum &&  i.discipline == j.discipline)
     	room[i] == room[j];
-   
-//-------------------    
+     
     
-  //RESTRICAO DE CONFLITO  
+  //RESTRICAO DE CONFLITO  E RESTRICOES DE AULA 
   
   //garantir uma unica aula de um curriculo em determinado horario
   forall(r in InstanceSet, x in Curriculum) {
@@ -323,8 +298,7 @@ subject to {
        //) < 2;
   }  
     
-   //RESTRICOES DE AULA    
-    //garantir que os cursos da manha iniciem e acabem pela manha
+  //garantir que os cursos da manha iniciem e acabem pela manha
   forall(d in MorningCurriculum, i in InstanceSet
          : i.Curriculum == d) 
     (Start[i] % DayDuration) >= 0 && (Start[i] % DayDuration) < HalfDayDuration;
@@ -338,6 +312,11 @@ subject to {
   forall(d in NoonCurriculum, i in InstanceSet
          : i.Curriculum == d) 
     (Start[i] % DayDuration) >= 5 && (Start[i] % DayDuration) < DayDuration; 
+      
+  //Restrição minima de dias: Garantir que as aulas ocorram com a quantidade especificada na oferta   
+  forall(r in RequirementSet, i in InstanceSet)
+     if(r.discipline == i.discipline && r.Curriculum == i.Curriculum)
+     	i.id >= 1 && i.id  <= r.repetition;   
 	
 };
 
@@ -361,7 +340,6 @@ tuple Course {
   , p in Teacher 
   , i in x.id..x.id
   : (t == Start[x])
-  //&& (t < End[x])
   && (x.Curriculum == c)
   && (room[x] == ord(Room, r))
   && (ord(Teacher,p) == teacher[x])
