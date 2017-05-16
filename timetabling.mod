@@ -216,7 +216,7 @@ execute {
    var p = cp.param;
    p.logPeriod = 10000;
    p.searchType = "DepthFirst";
-   p.timeLimit = 30;
+   p.timeLimit = 60;
 }
 
 
