@@ -214,9 +214,9 @@ execute {
    var assignStart = f.searchPhase(Start, selectVar, selectValue);
    cp.setSearchPhases(assignTeacher, assignStart, assignRoom);
    var p = cp.param;
-   p.logPeriod = 10000;
+   p.logPeriod = 100000;
    p.searchType = "DepthFirst";
-   p.timeLimit = 60;
+   p.timeLimit = 120;
 }
 
 
@@ -237,7 +237,9 @@ subject to {
   //----------------------------------------------  
   //RESTRICAO DE DISPONIBILIDADE DO PROFESSOR
   
+  
   //Garantir que o professor tenha uma ou nenhuma aula em determinado horário
+  
   forall(r in InstanceSet, x in Teacher) {
     if(<r.discipline, r.Curriculum> in PossibleTeacherClass[x])
       (sum(o in InstanceSet
@@ -258,7 +260,7 @@ subject to {
         
 	//Garantir que a carga horaria minima do professor durante a semana seja respeitada
 	forall(teacher in Teacher){
-	  ch[teacher] < 18;	
+	  ch[teacher] < 26;	
 	}  
 	    
     
@@ -270,9 +272,7 @@ subject to {
   forall(r in InstanceSet, x in Room) {
     if(PossibleRoom[r.discipline,x] == 1)
       (sum(o in InstanceSet : 1 == PossibleRoom[o.discipline,x] && r.id != o.id)      	
-        (Start[o] == Start[r]) *(room[o] == ord(Room,x))) < 2;        
-   
-                
+        (Start[o] == Start[r]) *(room[o] == ord(Room,x))) < 2;                     
   }
   
   //RESTRICAO DE CAPACIDADE DE SALAS
