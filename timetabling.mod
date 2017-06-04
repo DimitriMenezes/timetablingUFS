@@ -189,7 +189,6 @@ tuple Instance {
 dvar int Start[InstanceSet] in Time;               			// Variavel de alocacao sobre o tempo
 dvar int room[InstanceSet] in RoomId;              			// Variavel de alocacao no espaço
 dvar int teacher[InstanceSet] in TeacherId;        			// Variavel de alocacao de recurso
-dvar int classTeacher[Curriculum,Discipline] in TeacherId;  // teacher working once per time point
 
 //FUNCAO OBJETIVO
 
@@ -216,7 +215,7 @@ execute {
    var p = cp.param;
    p.logPeriod = 100000;
    p.searchType = "DepthFirst";
-   p.timeLimit = 1800;
+   p.timeLimit = 120;
 }
 
 
@@ -253,10 +252,6 @@ subject to {
   forall(r in InstanceSet) 
     teacher[r] in PossibleTeacherIDS[r.Curriculum, r.discipline];    
     
-  //garantir que o professor é sempre o mesmo para uma disciplina e um curriculo
-  forall(c in Curriculum, d in Discipline, r in InstanceSet 
-         : r.Curriculum == c && r.discipline == d) 
-    teacher[r] == classTeacher[c, d];
         
 	//Garantir que a carga horaria minima do professor durante a semana seja respeitada
 	forall(teacher in Teacher){
@@ -316,7 +311,8 @@ subject to {
   //Restrição minima de dias: Garantir que as aulas ocorram com a quantidade especificada na oferta   
   forall(r in RequirementSet, i in InstanceSet)
      if(r.discipline == i.discipline && r.Curriculum == i.Curriculum)
-     	i.id >= 1 && i.id  <= r.repetition;   
+     	i.id >= 1 && i.id  <= r.repetition;  
+     	   	 
 	
 };
 
